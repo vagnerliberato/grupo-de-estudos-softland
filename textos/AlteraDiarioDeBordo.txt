@@ -1,0 +1,26 @@
+/* Inicio - Arthemus - 12/08/2011 */
+
+CREATE TABLE diario (
+  id_diario integer PRIMARY KEY,
+  observacao blob,
+  dataInicial date,
+  dataFinal date,
+  horaInicio timestamp,
+  horaFim timestamp,
+  id_tarefa integer,
+  id_analista char(2)
+);
+
+CREATE TABLE tarefa (
+  id_tarefa integer PRIMARY KEY,
+  descricao blob,
+  status integer,
+  ficha integer
+);
+
+alter TABLE diario add constraint FK_Analista_ID_Analista FOREIGN KEY (id_analista) REFERENCES analista (codigo);
+ALTER TABLE diario ADD constraint FK_Diario_ID_Tarefa FOREIGN KEY (id_tarefa) REFERENCES tarefa (id_tarefa);
+
+commit work;
+
+/* Fim - Arthemus - 12/08/2011 */
