@@ -5,9 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.DefaultTableModel;
 
 public class DAO {
 
@@ -53,7 +50,7 @@ public class DAO {
             PreparedStatement stm = Conexao.prepareStatement(sql);
 
             stm.setInt(1, id);
-            
+
             int registros = stm.executeUpdate();
 
             if (registros > 0) {

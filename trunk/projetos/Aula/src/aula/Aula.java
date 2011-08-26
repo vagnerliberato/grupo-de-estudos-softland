@@ -8,12 +8,10 @@ import javax.swing.table.DefaultTableModel;
 public class Aula extends javax.swing.JFrame {
 
     public Aula() {
-
         initComponents();
         setLocationRelativeTo(null);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -122,29 +120,22 @@ public class Aula extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DAO Conexao = new DAO();
-
         JOptionPane.showMessageDialog(null, Conexao.getStatusconexao());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void carregaGrid() {
         DAO pesquisa = new DAO();
-
         ResultSet result = pesquisa.ConsultaCliente(edNome.getText());
 
         try {
-
             DefaultTableModel modelo = (DefaultTableModel) grid.getModel();
-
             modelo.setNumRows(0);
-
             while (result.next()) {
                 modelo.addRow(new Object[]{
                             result.getInt("ALMOX"),
                             result.getString("ALMOXDES")});
             }
-
             grid.setModel(modelo);
-
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage());
         }
@@ -156,28 +147,16 @@ public class Aula extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         DAO dao = new DAO();
-
         try {
             int i = grid.getSelectedRow();
-
             Integer n = (Integer) grid.getValueAt(i, 0);
-
             dao.deletaID(n);
-
             carregaGrid();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnDeletarActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Aula().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeletar;
     private javax.swing.JTextField edNome;

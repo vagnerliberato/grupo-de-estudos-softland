@@ -4,12 +4,12 @@ import java.sql.*;
 
 public class ConexaoBanco {
 
-    private static String url, usuario, senha, drive;
+    private static String url,  usuario,  senha,  drive;
 
     public static Connection Conectar() {
         try {
             drive = "org.firebirdsql.jdbc.FBDriver";
-            url = "jdbc:firebirdsql:192.168.1.120/3060:D:/Bancos/Softcom/construshow.ib";
+            url = "jdbc:firebirdsql:192.168.1.120/3060:D:/Bancos/Softcom/litoral.fbd";
             usuario = "SYSDBA";
             senha = "buana";
 
