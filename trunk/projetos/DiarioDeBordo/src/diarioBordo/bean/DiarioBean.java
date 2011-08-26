@@ -1,35 +1,43 @@
-package bean;
+package diarioBordo.bean;
 
 import java.util.Date;
 
 public class DiarioBean {
-    
-    private int id = 0;
-    private String observacao = null;
-    private Date dataInicial = null;
-    private Date dataFinal = null;
-    private Date horaInicio = null;
-    private Date horaFim = null;
-    private TarefaBean tarefa = null;
-    private UsuarioBean usuario = null;
+
+    private int id;
+    private String observacao;
+    private Date dataInicio;
+    private Date dataFim;
+    private Date horaInicio;
+    private Date horaFim;
+    private TarefaBean tarefa;
+    private UsuarioBean usuario;
 
     public DiarioBean() {
+        this.id = 0;
+        this.observacao = null;
+        this.dataInicio = null;
+        this.dataFim = null;
+        this.horaInicio = null;
+        this.horaFim = null;
+        this.tarefa = null;
+        this.usuario = null;
     }
 
-    public Date getDataFinal() {
-        return dataFinal;
+    public Date getDataFim() {
+        return dataFim;
     }
 
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
+    public Date getDataInicio() {
+        return dataInicio;
     }
 
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
     public Date getHoraFim() {
