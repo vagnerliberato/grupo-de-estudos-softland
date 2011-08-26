@@ -1,4 +1,4 @@
-package model;
+package diarioBordo.controller;
 
 import java.sql.*;
 

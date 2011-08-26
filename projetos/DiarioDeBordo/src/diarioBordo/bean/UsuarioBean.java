@@ -1,13 +1,15 @@
-package bean;
+package diarioBordo.bean;
 
 public class UsuarioBean {
-    
-    private int id = 0;
-    private String nome = null;
-    private String senha = null;
-    
-    public UsuarioBean(){
-        
+
+    private int id;
+    private String nome;
+    private String senha;
+
+    public UsuarioBean() {
+        this.id = 0;
+        this.nome = null;
+        this.senha = null;
     }
 
     public int getId() {

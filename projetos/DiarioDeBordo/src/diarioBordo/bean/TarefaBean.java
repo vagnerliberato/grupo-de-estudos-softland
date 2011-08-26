@@ -1,13 +1,19 @@
-package bean;
+package diarioBordo.bean;
 
 public class TarefaBean {
-    
-    private int id = 0;
-    private String descricao = null;
-    private String ficha = null;
-    private String status = null;
+
+    private int id;
+    private String descricao;
+    private String observacao;
+    private String ficha;
+    private String status;
 
     public TarefaBean() {
+        this.id = 0;
+        this.descricao = null;
+        this.observacao = null;
+        this.ficha = null;
+        this.status = null;
     }
 
     public String getDescricao() {
@@ -32,6 +38,14 @@ public class TarefaBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
     public String getStatus() {

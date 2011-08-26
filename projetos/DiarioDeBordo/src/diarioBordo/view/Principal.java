@@ -1,22 +1,23 @@
-package view;
+package diarioBordo.view;
 
 import javax.swing.*;
 
 public class Principal extends javax.swing.JFrame {
 
-    String cordaBolinha;
+    public Principal() {
 
-    public Principal() throws Exception {
+        //inicializa componentes da tela principal.
         initComponents();
 
-        setLocationRelativeTo(null);
-
+        //configura a tela principal para exibição em "Tela Cheia".
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        setSkin(3);
+        //configura um estilo para as janelas.
+        setSkin(1);
     }
 
-    private void setSkin(int opcao) throws Exception {
+    private void setSkin(int opcao) {
+
         String Skin = null;
 
         switch (opcao) {
@@ -32,65 +33,57 @@ public class Principal extends javax.swing.JFrame {
             case 4:
                 Skin = "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
                 break;
-            case 5:
-                Skin = "com.jgoodies.looks.windows.WindowsLookAndFeel";
-                break;
         }
 
-        UIManager.setLookAndFeel(Skin);
-        SwingUtilities.updateComponentTreeUI(this);
+        try {
+            UIManager.setLookAndFeel(Skin);
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (InstantiationException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (IllegalAccessException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (UnsupportedLookAndFeelException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
 
-        /*
-         * Exemplos:
-         * 
-         * javax.swing.plaf.metal.MetalLookAndFeel;  
-         * com.sun.java.swing.plaf.motif.MotifLookAndFeel;  
-         * com.sun.java.swing.plaf.windows.WindowsLookAndFeel;  
-         * com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
-         */
+        SwingUtilities.updateComponentTreeUI(this);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         menuBar = new javax.swing.JMenuBar();
-        mTabelas = new javax.swing.JMenu();
-        mDiario = new javax.swing.JMenu();
+        mMenu = new javax.swing.JMenu();
         mmTarefa = new javax.swing.JMenuItem();
-        mFerramentas = new javax.swing.JMenu();
-        mSair = new javax.swing.JMenu();
+        mmSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistema - Diario de Bordo - Softland");
+        setTitle("Softland - Diário de Bordo");
         setName("framePrincipal"); // NOI18N
 
         menuBar.setName("menuBar"); // NOI18N
 
-        mTabelas.setText("Tabelas");
-        menuBar.add(mTabelas);
+        mMenu.setActionCommand("Menu");
+        mMenu.setLabel("Menu");
 
-        mDiario.setText("Diario");
-
-        mmTarefa.setText("Tarefas");
+        mmTarefa.setText("Diario");
         mmTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mmTarefaActionPerformed(evt);
             }
         });
-        mDiario.add(mmTarefa);
+        mMenu.add(mmTarefa);
 
-        menuBar.add(mDiario);
-
-        mFerramentas.setText("Ferramentas");
-        menuBar.add(mFerramentas);
-
-        mSair.setText("Sair");
-        mSair.addActionListener(new java.awt.event.ActionListener() {
+        mmSair.setText("Sair");
+        mmSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mSairActionPerformed(evt);
+                mmSairActionPerformed(evt);
             }
         });
-        menuBar.add(mSair);
+        mMenu.add(mmSair);
+
+        menuBar.add(mMenu);
 
         setJMenuBar(menuBar);
 
@@ -110,26 +103,16 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSairActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_mSairActionPerformed
-
     private void mmTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmTarefaActionPerformed
-        try {
-            CadastroDeTarefas tarefa = new CadastroDeTarefas();
-            getContentPane().add(tarefa);
-            tarefa.setVisible(true);
-        } catch (Exception ex) {
-
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
     }//GEN-LAST:event_mmTarefaActionPerformed
+
+    private void mmSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mmSairActionPerformed
+        System.exit(0);
+}//GEN-LAST:event_mmSairActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu mDiario;
-    private javax.swing.JMenu mFerramentas;
-    private javax.swing.JMenu mSair;
-    private javax.swing.JMenu mTabelas;
+    private javax.swing.JMenu mMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mmSair;
     private javax.swing.JMenuItem mmTarefa;
     // End of variables declaration//GEN-END:variables
 }

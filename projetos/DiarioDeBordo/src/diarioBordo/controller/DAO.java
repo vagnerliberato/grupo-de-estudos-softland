@@ -1,6 +1,6 @@
-package model;
+package diarioBordo.controller;
 
-import bean.TarefaBean;
+import diarioBordo.bean.TarefaBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
