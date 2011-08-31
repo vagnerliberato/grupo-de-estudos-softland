@@ -1,4 +1,4 @@
-package aula;
+package aula.forms;
 
 public class Main {
 

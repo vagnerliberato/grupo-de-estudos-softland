@@ -1,6 +1,6 @@
-package aula;
+package aula.forms;
 
-import DAO.DAO;
+import aula.dao.DAO;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

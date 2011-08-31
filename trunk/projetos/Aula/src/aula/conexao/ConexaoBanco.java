@@ -1,4 +1,4 @@
-package Conexao;
+package aula.conexao;
 
 import java.sql.*;
 

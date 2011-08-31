@@ -1,6 +1,6 @@
-package DAO;
+package aula.dao;
 
-import Conexao.ConexaoBanco;
+import aula.conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
