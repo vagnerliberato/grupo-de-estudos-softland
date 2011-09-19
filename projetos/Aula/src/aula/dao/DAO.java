@@ -1,57 +1,34 @@
 package aula.dao;
 
-import aula.conexao.ConexaoBanco;
+import globalproject.persist.PersistData;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-public class DAO {
+public class DAO extends PersistData {
 
-    Connection Conexao = ConexaoBanco.Conectar();
-    private String statusconexao;
-
-    public String getStatusconexao() {
-        return statusconexao;
+    public DAO(Connection conexao) {
+        super(conexao);
     }
 
-    public void setStatusconexao(String statusconexao) {
-        this.statusconexao = statusconexao;
-    }
-
-    public DAO() {
-
-
-        if (Conexao == null) {
-            setStatusconexao("IH! Deu shit");
-
-        } else {
-            setStatusconexao("ConexÃ£o OK");
-        }
-    }
-
-    public ResultSet ConsultaCliente(String codigo) {
+    public ResultSet ConsultaCliente(String codigo) throws Exception {
         try {
-            String sql = "select ALMOX,ALMOXDES from ALMOX";
-            PreparedStatement stm = Conexao.prepareStatement(sql);
+            String sql = "select ALMOX, ALMOXDES from ALMOX";
 
-            ResultSet rs = stm.executeQuery();
+            ResultSet rs = ExecuteQuery(sql);
 
             return rs;
 
         } catch (Exception erro) {
-            return null;
+            throw new Exception("Erro na execução da pesquisa no banco de dados: \n\n" + erro.getMessage());
         }
     }
 
-    public void deletaID(Integer id) {
+    public void deletaID(Integer id) throws Exception {
         try {
             String sql = "DELETE FROM ALMOX WHERE ALMOX = ?";
-            PreparedStatement stm = Conexao.prepareStatement(sql);
 
-            stm.setInt(1, id);
-
-            int registros = stm.executeUpdate();
+            int registros = ExecuteCommand(sql, id);
 
             if (registros > 0) {
                 JOptionPane.showMessageDialog(null, "Registro deletado com sucesso");
@@ -60,7 +37,7 @@ public class DAO {
             }
 
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage());
+            throw new Exception("Erro na execução da pesquisa no banco de dados: \n\n" + erro.getMessage());
         }
     }
 }

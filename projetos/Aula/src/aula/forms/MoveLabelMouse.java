@@ -23,14 +23,14 @@ public class MoveLabelMouse extends JFrame implements MouseListener {
 
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        btnBotao = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36));
-        jLabel1.setText("Arthemus");
+        btnBotao.setFont(new java.awt.Font("Tahoma", 1, 36));
+        btnBotao.setText("Arthemus");
 
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBotao.addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -38,7 +38,7 @@ public class MoveLabelMouse extends JFrame implements MouseListener {
             }
         });
 
-        jLabel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        btnBotao.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
 
             @Override
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -48,8 +48,8 @@ public class MoveLabelMouse extends JFrame implements MouseListener {
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(53, 53, 53).addComponent(jLabel1).addContainerGap(55, Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(40, 40, 40).addComponent(jLabel1).addContainerGap(73, Short.MAX_VALUE)));
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(53, 53, 53).addComponent(btnBotao).addContainerGap(55, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGap(40, 40, 40).addComponent(btnBotao).addContainerGap(73, Short.MAX_VALUE)));
 
         pack();
     }
@@ -59,10 +59,10 @@ public class MoveLabelMouse extends JFrame implements MouseListener {
 
     private void jLabel1MouseDragged(java.awt.event.MouseEvent evt) {
 
-        xSel = jLabel1.getLocation().x;
-        ySel = jLabel1.getLocation().y;
+        xSel = btnBotao.getLocation().x;
+        ySel = btnBotao.getLocation().y;
 
-        jLabel1.setLocation((evt.getX() + xSel) - (jLabel1.getWidth() / 2), (evt.getY() + ySel) - (jLabel1.getHeight() / 2));
+        btnBotao.setLocation((evt.getX() + xSel) - (btnBotao.getWidth() / 2), (evt.getY() + ySel) - (btnBotao.getHeight() / 2));
 
         repaint();
 
@@ -100,6 +100,6 @@ public class MoveLabelMouse extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
     // Declaração de variáveis - não modifique                       
-    private javax.swing.JLabel jLabel1;
+    private JButton btnBotao;
     // Fim da declaração de variáveis                     
 }
