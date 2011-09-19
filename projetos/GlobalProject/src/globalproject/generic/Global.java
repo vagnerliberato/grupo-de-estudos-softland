@@ -1,9 +1,6 @@
 package globalproject.generic;
 
-import globalproject.persist.PersistData;
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -13,7 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.swing.JOptionPane;
 
 /**
- * Classe de uso generico. Contem métodos de utilização diversa dentro do sistema.
+ * Classe de uso generico.
+ * Contem métodos de utilização diversa dentro do sistema.
  *
  * @author Arthemus C. Moreira
  * @version 1.0.0
@@ -38,36 +36,6 @@ public class Global {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         return usuario + " - " + (format.format(new Date()));
-    }
-
-    /**
-     * Determina um novo ID para uma tabela.
-     * 
-     * @param conexao Conexão com o banco de dados, uma instancia da classe Firebird por exemplo.
-     * @param tableName Tabela para qual deseja-se gerar o novo ID.
-     * @param id Nome do campo ID da tabela.
-     * @return O próximo ID possivel da tabela.
-     * @throws Exception 
-     */
-    public static Integer ultimoId(Connection conexao, String tableName, String id) throws Exception {
-
-        PersistData data = new PersistData(conexao);
-
-        ResultSet rs = data.executeQuery("SELECT MAX(" + id + ") from " + tableName);
-
-        rs.next();
-
-        Object result = rs.getObject(1);
-
-        try {
-            if (result == null) {
-                return 1;
-            } else {
-                return (Integer) result + 1;
-            }
-        } finally {
-            rs.close();
-        }
     }
 
     /**
@@ -102,7 +70,7 @@ public class Global {
      * @param obj Formulario ou tela a qual pertence o alerta.
      * @param msg Texto a ser exibido.
      */
-    public static void alertaMsg(Component obj, String msg) {
+    public static void alertaMsg(Component obj, String msg, Object tipo) {
         JOptionPane.showMessageDialog(obj, msg);
     }
 }
