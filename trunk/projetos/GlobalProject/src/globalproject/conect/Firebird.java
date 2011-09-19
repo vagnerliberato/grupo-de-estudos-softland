@@ -9,15 +9,15 @@ import java.sql.*;
  * @version 1.0.0
  * @since Deve-se alterar manualmente os atributos URL, LOGIN e SENHA.
  *        Não é possível instanciar diretamente a classe Firebird, para utiliza-la
- *        deve-se chamar o método Singleton.
+ *        deve-se chamar o método getInstancia.
  */
 public class Firebird {
 
     private static Firebird firebird = null;
-    private static String driver = null;
-    private static String url = null;
-    private static String login = null;
-    private static String senha = null;
+    private String driver = null;
+    private String url = null;
+    private String login = null;
+    private String senha = null;
 
     private Firebird() {
     }
@@ -26,12 +26,12 @@ public class Firebird {
      * 
      * @return Conexão com o banco de dados.
      */
-    public static Connection getConexao() throws ClassNotFoundException, SQLException {
+    public Connection getConexao() throws ClassNotFoundException, SQLException {
 
         driver = "org.firebirdsql.jdbc.FBDriver";
-        url = "jdbc:firebirdsql:arthemus/3060:C:/ArvoreDeTrabalho/Bancos/AGENDA.FDB";
+        url = "jdbc:firebirdsql:192.168.1.120/3060:D:/Bancos/softcom/LITORAL.FDB";
         login = "SYSDBA";
-        senha = "masterkey";
+        senha = "buana";
 
         try {
             Class.forName(driver);
@@ -50,7 +50,7 @@ public class Firebird {
      * 
      * @return Uma instancia da Classe Firebird.
      */
-    public static Firebird Singleton() {
+    public static Firebird getInstancia() {
 
         if (Firebird.firebird == null) {
             Firebird.firebird = new Firebird();
