@@ -1,26 +1,55 @@
 /* Inicio - Arthemus - 12/08/2011 */
 
 CREATE TABLE diario (
-  id_diario integer PRIMARY KEY,
-  observacao blob,
-  dataInicial date,
-  dataFinal date,
-  horaInicio timestamp,
-  horaFim timestamp,
-  id_tarefa integer,
-  id_analista char(2)
+    id_diario integer not null,
+    observacao varchar(2000),
+    dataInicio date not null,
+    dataFim date,
+    horaInicio varchar(8) not null,
+    horaFim varchar(8),
+    id_analista char(2) not null
 );
+commit;
 
-CREATE TABLE tarefa (
-  id_tarefa integer PRIMARY KEY,
-  descricao blob,
-  status integer,
-  ficha integer
-);
+alter table DIARIO add constraint PK_ID_Diario primary key (id_diario);
+commit;
 
 alter TABLE diario add constraint FK_Analista_ID_Analista FOREIGN KEY (id_analista) REFERENCES analista (codigo);
-ALTER TABLE diario ADD constraint FK_Diario_ID_Tarefa FOREIGN KEY (id_tarefa) REFERENCES tarefa (id_tarefa);
+commit;
 
-commit work;
+CREATE TABLE tarefa (
+    id_tarefa integer not null,
+    descricao varchar(500) not null,
+    horainicio varchar(8) not null,
+    horafim varchar(8),
+    observacoes varchar(2000),
+    status integer not null,
+    ficha integer
+);
+commit;
+
+alter table tarefa add constraint PK_ID_Tarefa primary key (id_tarefa);
+commit;
+
+create table CONTROLE_DIARIO_TAREFA (
+    id_diario integer not null,
+    id_tarefa integer not null
+);
+commit;
+
+alter table controle_diario_tarefa
+add constraint FK_Controle_Diario
+foreign key (ID_DIARIO) references DIARIO (ID_DIARIO);
+commit;
+
+alter table controle_diario_tarefa
+add constraint FK_Controle_Tarefa
+foreign key (ID_TAREFA) references TAREFA (ID_TAREFA);
+commit;
+
+alter table controle_diario_tarefa
+add constraint PK_Controle_Diario_Tarefa
+primary key (ID_DIARIO,ID_TAREFA);
+commit;
 
 /* Fim - Arthemus - 12/08/2011 */

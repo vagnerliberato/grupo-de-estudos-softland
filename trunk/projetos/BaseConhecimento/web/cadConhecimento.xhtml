@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      lang="pt-br" 
+      xml:lang="pt-br"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <h:head>
+        <title>Base de Conhecimento</title>
+
+        <link rel="shortcut icon" href="imagens/B.ico" type="image/x-icon" />
+
+        <style type="text/css">  
+            .ui-widget {  
+                font-size: 12px !important;  
+            }  
+        </style> 
+
+        <script language="JavaScript"> 
+           function LimparCampos() {
+             document.getElementById('FormConhecimento:referencia').value = '';
+             document.getElementById('FormConhecimento:fato').value = '';
+             document.getElementById('FormConhecimento:esclarecimento').value = '';             
+           }
+        </script>
+    </h:head>
+
+    <h:body style="font-family: Arial; background-image: url('imagens/parede.jpg')">
+        <center>
+
+            <p:panel>
+                <h:graphicImage value="imagens/cadastro_2.jpg" style="width: 30%;" /> 
+            </p:panel>
+
+            <br/>
+
+            <f:view contentType="text/html">
+
+                <h:form id="FormConhecimento">   
+                    <h:panelGrid columns="2">
+                        <p:panel id="panel" style="background-image: url('imagens/parede.jpg')">
+                            <h:outputLabel value="Analista"/>
+                            <p:spacer width="10"/>
+
+                            <h:selectOneMenu value="#{conhecimento.conhecimentoBean.analista.codigo}">
+                                <f:selectItems value="#{conhecimento.conhecimentoBean.listaAnalistas}"/>
+                            </h:selectOneMenu>
+
+                            <br/>
+                            <br/>
+
+                            <h:outputLabel value="Referência"/>       
+                            <p:spacer width="10"/>
+                            <p:inputText id="referencia" value="#{conhecimento.conhecimentoBean.referencia}" size="100"/>
+
+                            <br/>
+                            <br/>
+
+                            <h:outputLabel value="Fato"/>
+
+                            <p:inputTextarea id="fato" value="#{conhecimento.conhecimentoBean.fato}" maxHeight="500" cols="100" rows="5"/>
+
+                            <br/>
+
+                            <h:outputLabel value="Esclarecimento"/>
+
+                            <p:inputTextarea id="esclarecimento" value="#{conhecimento.conhecimentoBean.esclarecimento}" maxHeight="1000" cols="100" rows="5"/>
+
+                            <br/>
+                            <br/>
+                            <center>
+                                <p:commandButton value="Gravar"
+                                                 actionListener="#{conhecimento.addConhecimento()}"
+                                                 title="Gravar novo conhecimento"
+                                                 update="msgs"
+                                                 oncomplete="LimparCampos();"/>
+
+                                <p:commandButton id="btnLimpar"
+                                                 value="Limpar"
+                                                 type="reset"
+                                                 title="Limpar todos os campos"/>
+
+                                <p:commandButton value="Sair"
+                                                 action="#{conhecimento.irPara('index.faces')}"
+                                                 title="Voltar para pagina inicial"/>
+                            </center>
+                        </p:panel>
+                    </h:panelGrid>   
+
+                    <p:messages id="msgs" showDetail="true"/>  
+
+                </h:form>
+            </f:view>
+        </center>
+    </h:body>
+</html>

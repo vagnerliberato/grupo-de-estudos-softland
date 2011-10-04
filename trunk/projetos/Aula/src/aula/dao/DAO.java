@@ -15,7 +15,7 @@ public class DAO extends PersistData {
         try {
             String sql = "select ALMOX, ALMOXDES from ALMOX";
 
-            ResultSet rs = ExecuteQuery(sql);
+            ResultSet rs = executeQuery(sql);
 
             return rs;
 
@@ -28,7 +28,7 @@ public class DAO extends PersistData {
         try {
             String sql = "DELETE FROM ALMOX WHERE ALMOX = ?";
 
-            int registros = ExecuteCommand(sql, id);
+            int registros = executeCommand(sql, id);
 
             if (registros > 0) {
                 JOptionPane.showMessageDialog(null, "Registro deletado com sucesso");

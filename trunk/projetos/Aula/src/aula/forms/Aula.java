@@ -3,9 +3,11 @@ package aula.forms;
 import aula.dao.DAO;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import globalproject.
+import globalproject.conect.Firebird;
+import globalproject.generic.Funcoes;
 
 public class Aula extends javax.swing.JFrame {
 
@@ -15,18 +17,18 @@ public class Aula extends javax.swing.JFrame {
     public Aula() {
 
         initComponents();
-
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);   
+        AbrirConexao();
     }
 
-    private void AbriConexao() {
-        
-        conexao = Firebird.getInstancia().getConexao();
-
-        Global.alertaMsg(Aula.this, ex.getMessage(), null);
-
-        Global.alertaMsg(Aula.this, ex.getMessage(), null);
-
+    private void AbrirConexao() {
+        try {
+            conexao = Firebird.getInstancia().getConexao();
+        } catch (ClassNotFoundException ex) {
+            Funcoes.alerta(Aula.this, ex.getMessage());
+        } catch (SQLException ex) {
+            Funcoes.alerta(Aula.this, ex.getMessage());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -146,7 +148,7 @@ public class Aula extends javax.swing.JFrame {
 
             grid.setModel(modelo);
 
-            pesquisa.FinalizarTransacao();
+            pesquisa.fechaTransacao();
 
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, erro.getMessage());
