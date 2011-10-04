@@ -7,55 +7,42 @@ import java.sql.*;
  *
  * @author Arthemus C. Moreira
  * @version 1.0.0
- * @since Deve-se alterar manualmente os atributos URL, LOGIN e SENHA.
- *        Não é possível instanciar diretamente a classe Firebird, para utiliza-la
- *        deve-se chamar o método getInstancia.
  */
-public class Firebird {
+public class Firebird implements InterfaceConexao {
 
-    private static Firebird firebird = null;
-    private String driver = null;
     private String url = null;
     private String login = null;
     private String senha = null;
 
-    private Firebird() {
+    @Override
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    /**
-     * 
-     * @return Conexão com o banco de dados.
-     */
+    @Override
+    public void setUsuario(String usuario) {
+        this.login = usuario;
+    }
+
+    @Override
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    @Override
     public Connection getConexao() throws ClassNotFoundException, SQLException {
 
-        driver = "org.firebirdsql.jdbc.FBDriver";
-        url = "jdbc:firebirdsql:192.168.1.120/3060:D:/Bancos/softcom/LITORAL.FDB";
-        login = "SYSDBA";
-        senha = "buana";
-
         try {
-            Class.forName(driver);
+            Class.forName("org.firebirdsql.jdbc.FBDriver");
+
             Connection con = DriverManager.getConnection(url, login, senha);
 
             return con;
 
         } catch (ClassNotFoundException erro) {
-            throw new ClassNotFoundException("Erro com a implementação do Driver de conexão: \n\n" + erro.getMessage());
+            throw new ClassNotFoundException("Problemas para carregar o driver de conexão: \n\n Erro: " + erro.getMessage());
         } catch (SQLException erro) {
-            throw new SQLException("Erro com a String de conexão: \n\n" + erro.getMessage());
+            throw new SQLException("Problemas com a String de conexão: \n\n Erro: " + erro.getMessage());
         }
-    }
-
-    /**
-     * 
-     * @return Uma instancia da Classe Firebird.
-     */
-    public static Firebird getInstancia() {
-
-        if (Firebird.firebird == null) {
-            Firebird.firebird = new Firebird();
-        }
-
-        return Firebird.firebird;
     }
 }

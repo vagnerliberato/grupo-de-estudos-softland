@@ -6,61 +6,77 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Classe responsavel pela persistencia dos dados.
+ * Classe responsavel pelo acesso e persistencia no banco de dados.
  *
  * @author Arthemus C. Moreira
  * @version 1.0.0
  * @since Esta classe deve ser herdada por qualquer classe que venha a
  *   realizar operações no banco de dados, como por exemplo, as classes DAO.
  */
-public class PersistData {
+public abstract class PersistData {
 
-    private static Connection conect;
+    private static Connection conexao;
     private PreparedStatement statement;
 
     protected PersistData(Connection conexao) {
-        PersistData.conect = conexao;
+        PersistData.conexao = conexao;
     }
 
-    private PreparedStatement GetStatement(String st) throws SQLException {
-        return PersistData.conect.prepareStatement(st);
+    private PreparedStatement getStatement(String st) throws SQLException {
+        return PersistData.conexao.prepareStatement(st);
     }
 
-    public void MultiTransacao(Boolean multi) throws Exception {
+    /**
+     * Por padrão, as transações no banco de dados são finalizadas automaticamente.
+     * Usar essa função caso deseje controlar as finalizações (Commit) ou 
+     * estornos (RollBack) manualmente.
+     * 
+     * @param multi True ou False.
+     * @throws Exception
+     */
+    public void multiTransacao(Boolean multi) throws Exception {
         try {
-            PersistData.conect.setAutoCommit(multi);
+            PersistData.conexao.setAutoCommit(!multi);
         } catch (Exception ex) {
-            throw new Exception("Erro na abertura de transação com o banco de dados" + ex.getMessage());
-        }
-    }
-
-    public void FinalizarTransacao() throws Exception {
-        try {
-            this.statement.close();
-        } catch (Exception ex) {
-            throw new Exception("Erro na finalização da chamada ao banco" + ex.getMessage());
+            throw new Exception("Problemas ao abrir uma nova transação no banco de dados: \n\n Erro: " + ex.getMessage());
         }
     }
 
     /**
-     * Em operações de inserção ou alteração (INSERT, UPDATE, DELETE), finalização a 
-     * transação com um Commit.
-     * 
-     * @throws Exception 
+     * Fecha a transação atual.
      */
-    public void Commit() throws Exception {
+    public void fechaTransacao() throws Exception {
         try {
-            PersistData.conect.commit();
+            this.statement.close();
         } catch (Exception ex) {
-            throw new Exception("Erro ao finalizar transação" + ex.getMessage());
+            throw new Exception("Problemas para finalizar a transação com o banco de dados: \n\n Erro: " + ex.getMessage());
         }
     }
 
-    public void RollBack() throws Exception {
+    /**
+     * Em operações dos tipos (INSERT, UPDATE, DELETE), 
+     * finaliza a transação com um Commit.
+     * 
+     * @throws Exception 
+     */
+    public void commit() throws Exception {
         try {
-            PersistData.conect.rollback();
+            PersistData.conexao.commit();
         } catch (Exception ex) {
-            throw new Exception("Erro ao estornar transação" + ex.getMessage());
+            throw new Exception("Problemas para finalizar a gravação dos dados: \n\n Erro: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Estorna uma transação.
+     * 
+     * @throws Exception 
+     */
+    public void rollBack() throws Exception {
+        try {
+            PersistData.conexao.rollback();
+        } catch (Exception ex) {
+            throw new Exception("Problemas para estornar a transação com o banco de dados: \n\n Erro: " + ex.getMessage());
         }
     }
 
@@ -72,9 +88,9 @@ public class PersistData {
      *   não é fixa e pode variar independente do Script).
      * @throws Exception 
      */
-    public Integer ExecuteCommand(String query, Object... params) throws Exception {
+    public Integer executeCommand(String query, Object... params) throws Exception {
         try {
-            this.statement = GetStatement(query);
+            this.statement = getStatement(query);
 
             for (int i = 0; i < params.length; i++) {
                 this.statement.setObject(i + 1, params[i]);
@@ -82,8 +98,8 @@ public class PersistData {
 
             return this.statement.executeUpdate();
 
-        } catch (Exception e) {
-            throw new Exception("Erro na execução do comando no banco de dados: \n\n" + e.getMessage());
+        } catch (Exception ex) {
+            throw new Exception("Problemas com execução do comando no banco de dados: \n\n Erro: " + ex.getMessage());
         }
     }
 
@@ -96,9 +112,9 @@ public class PersistData {
      * @return Um ResultSet contendo os registros da pesquisa.
      * @throws Exception 
      */
-    public ResultSet ExecuteQuery(String query, Object... params) throws Exception {
+    public ResultSet executeQuery(String query, Object... params) throws Exception {
         try {
-            this.statement = GetStatement(query);
+            this.statement = getStatement(query);
 
             for (int i = 0; i < params.length; i++) {
                 this.statement.setObject(i + 1, params[i]);
@@ -106,8 +122,8 @@ public class PersistData {
 
             return this.statement.executeQuery();
 
-        } catch (Exception e) {
-            throw new Exception("Erro na execução da pesquisa no banco de dados: \n\n" + e.getMessage());
+        } catch (Exception ex) {
+            throw new Exception("Problemas ao realizar a pesquisa no banco de dados: \n\n Erro: " + ex.getMessage());
         }
     }
 
@@ -120,20 +136,24 @@ public class PersistData {
      * @return O próximo ID possivel da tabela.
      * @throws Exception
      */
-    public Integer UltimoId(String tableName, String id) throws Exception {
+    public Integer ultimoID(String tableName, String id) throws Exception {
 
-        ResultSet rs = ExecuteQuery("SELECT MAX(" + id + ") from " + tableName);
-
-        rs.next();
-
-        Object result = rs.getObject(1);
+        ResultSet rs = executeQuery("SELECT MAX(" + id + ") from " + tableName);
 
         try {
+
+            rs.next();
+
+            Object result = rs.getObject(1);
+
             if (result == null) {
                 return 1;
             } else {
                 return (Integer) result + 1;
             }
+
+        } catch (Exception ex) {
+            throw new Exception("Problemas para obter o próximo ID da Tabela: " + tableName + "\n\n Erro: " + ex.getMessage());
         } finally {
             rs.close();
         }
