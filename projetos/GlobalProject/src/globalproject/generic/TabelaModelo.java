@@ -101,6 +101,8 @@ public class TabelaModelo extends AbstractTableModel {
         while (rs.next()) {
             lines.add(new Row(rs));
         }
+
+        fireTableStructureChanged();
     }
 
     @Override

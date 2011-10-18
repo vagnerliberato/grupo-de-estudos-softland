@@ -140,7 +140,6 @@ public abstract class Funcoes {
             tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             tabela.setModel(new TabelaModelo(result));
         } catch (Exception ex) {
-            throw new Exception("Problemas para carregar tabela: \n\n Erro: " + ex.getMessage());
         }
     }
 }
