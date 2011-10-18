@@ -4,22 +4,20 @@ import br.com.diario.bean.TarefaBean;
 import br.com.diario.control.TarefaControl;
 import globalproject.generic.Funcoes;
 import java.util.Scanner;
-import javax.swing.JInternalFrame;
 
-public class CadTarefa extends JInternalFrame {
+public class EditTarefa extends javax.swing.JDialog {
 
-    private final String STATUS;
     private TarefaBean tarefaBean;
 
-    public CadTarefa() {
-        this.STATUS = "INCLUSAO";
-        tarefaBean = new TarefaBean();
+    public EditTarefa(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 
-    public CadTarefa(TarefaBean tarefaBean) {
-        this.STATUS = "ALTERACAO";
+    public EditTarefa(TarefaBean tarefaBean) {
         this.tarefaBean = tarefaBean;
+        setModal(true);
+        initComponents();
         preencheCampos();
     }
 
@@ -33,15 +31,13 @@ public class CadTarefa extends JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         areaObs = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
+        textFicha = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnGravar = new javax.swing.JButton();
         btnAbortar = new javax.swing.JButton();
-        textFicha = new javax.swing.JTextField();
 
-        setClosable(true);
-        setIconifiable(true);
-        setResizable(true);
-        setTitle("Cadastro de uma nova tarefa");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Edição dee tarefa");
 
         jLabel1.setText("Descrição:");
 
@@ -80,7 +76,7 @@ public class CadTarefa extends JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnGravar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(btnAbortar)
                 .addContainerGap())
         );
@@ -98,6 +94,7 @@ public class CadTarefa extends JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 324, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,8 +103,8 @@ public class CadTarefa extends JInternalFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                     .addComponent(textFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -117,6 +114,7 @@ public class CadTarefa extends JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 275, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +130,7 @@ public class CadTarefa extends JInternalFrame {
                     .addComponent(textFicha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,17 +142,10 @@ public class CadTarefa extends JInternalFrame {
         textFicha.setText("" + tarefaBean.getFicha());
     }
 
-    public void limparCampos() {
-        areaDescricao.setText("");
-        areaObs.setText("");
-        textFicha.setText("");
-
-        tarefaBean = new TarefaBean();
-    }
-
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
 
         Scanner scan = new Scanner(areaDescricao.getText());
+        tarefaBean.setDescricao("");
         while (scan.hasNext()) {
             if (tarefaBean.getDescricao().isEmpty()) {
                 tarefaBean.setDescricao(scan.nextLine());
@@ -164,6 +155,7 @@ public class CadTarefa extends JInternalFrame {
         }
 
         scan = new Scanner(areaObs.getText());
+        tarefaBean.setObservacao("");
         while (scan.hasNext()) {
             if (tarefaBean.getObservacao().isEmpty()) {
                 tarefaBean.setObservacao(scan.nextLine());
@@ -174,30 +166,25 @@ public class CadTarefa extends JInternalFrame {
 
         tarefaBean.setHoraInicio(Funcoes.getHoraAtual());
 
-        if (!textFicha.getText().isEmpty()) {
+        if (textFicha.getText().isEmpty()) {
+            tarefaBean.setFicha(0);
+        } else {
             tarefaBean.setFicha(Integer.parseInt(textFicha.getText()));
         }
 
         try {
             TarefaControl control = new TarefaControl();
-
-            if (STATUS.equals("INCLUSAO")) {
-                control.cadastraTarefa(tarefaBean);
-            } else if (STATUS.equals("ALTERACAO")) {
-                control.alteraTarefa(tarefaBean);
-            }
-
-            Funcoes.alerta(this, "Tarefa cadastrada com suscesso!");
-
-            limparCampos();
+            control.alteraTarefa(tarefaBean);
+            Funcoes.alerta(this, "Tarefa alterada com suscesso!");
+            dispose();
         } catch (Exception ex) {
             Funcoes.alerta(this, ex.getMessage());
         }
-    }//GEN-LAST:event_btnGravarActionPerformed
+}//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnAbortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbortarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_btnAbortarActionPerformed
+}//GEN-LAST:event_btnAbortarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDescricao;
     private javax.swing.JTextArea areaObs;

@@ -10,7 +10,6 @@ import java.util.Date;
 
 public class DiarioDAO extends PersistData {
 
-    private DiarioBean diarioBean;
     private final String insert =
             "insert into diario (" + "id_diario, " + "observacao, " + "datainicio, " + "datafim, " + "horainicio, " + "horafim, " + "id_analista) " + "values (?, ?, ?, ?, ?, ?, ?)";
     private final String delete =
@@ -20,14 +19,6 @@ public class DiarioDAO extends PersistData {
 
     public DiarioDAO(Connection conexao) {
         super(conexao);
-    }
-
-    public DiarioBean getDiarioBean() {
-        return diarioBean;
-    }
-
-    public void setDiarioBean(DiarioBean diarioBean) {
-        this.diarioBean = diarioBean;
     }
 
     public boolean isDiaAberto(Date AData) throws Exception {
@@ -72,17 +63,17 @@ public class DiarioDAO extends PersistData {
         }
     }
 
-    public int abrirNovoDia() throws Exception {
+    public int abrirNovoDia(DiarioBean diario) throws Exception {
         try {
             return executeCommand(
                     this.insert,
                     ultimoID("DIARIO", "ID_DIARIO"),
-                    this.diarioBean.getObservacao(),
-                    Funcoes.getDataSQL(this.diarioBean.getDataInicio()),
-                    this.diarioBean.getDataFim(),
-                    this.diarioBean.getHoraInicio(),
-                    this.diarioBean.getHoraFim(),
-                    this.diarioBean.getAnalista().getId());
+                    diario.getObservacao(),
+                    Funcoes.getDataSQL(diario.getDataInicio()),
+                    diario.getDataFim(),
+                    diario.getHoraInicio(),
+                    diario.getHoraFim(),
+                    diario.getAnalista().getId());
 
         } catch (Exception ex) {
             throw new Exception("Problemas para abrir um novo diario: \n\n" + ex.getMessage());
@@ -128,11 +119,40 @@ public class DiarioDAO extends PersistData {
                 int idDiario = resultSet.getInt("ID_DIARIO");
                 return idDiario;
             } else {
-                abrirNovoDia();
-                return getIdDiarioAtual(AData);
+                throw new Exception("Abra um diário para o dia de hoje");
             }
         } catch (Exception ex) {
             throw new Exception("Problemas ao verificar se ja existi um diario aberto hoje: \n\n" + ex.getMessage());
+        }
+    }
+
+    public void getDiarioAtual(DiarioBean diario) throws Exception {
+        try {
+            ResultSet result = null;
+            result = executeQuery("select d.ID_DIARIO, " +
+                    "d.OBSERVACAO, " +
+                    "d.DATAINICIO, " +
+                    "d.DATAFIM, " +
+                    "d.HORAINICIO, " +
+                    "d.HORAFIM, " +
+                    "d.ID_ANALISTA " +
+                    "from diario d " +
+                    "where d.datainicio = ? and d.id_analista = ?",
+                    Funcoes.getDataSQL(new Date()),
+                    DataLocal.getAnalistaBean().getId());
+
+            if (result.next()) {
+                diario.setId(result.getInt("ID_DIARIO"));
+                diario.setDataInicio(result.getDate("DATAINICIO"));
+                diario.setDataFim(result.getDate("DATAFIM"));
+                diario.setHoraInicio(result.getString("HORAINICIO"));
+                diario.setHoraFim(result.getString("HORAFIM"));
+                diario.setObservacao(result.getString("OBSERVACAO"));
+            } else {
+                throw new Exception("Não foi possivel carregar o diário atual, verifique!");
+            }
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
         }
     }
 }

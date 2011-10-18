@@ -1,8 +1,8 @@
 package br.com.diario.control;
 
+import br.com.diario.bean.DiarioBean;
 import br.com.diario.bean.TarefaBean;
 import br.com.diario.main.DataLocal;
-import br.com.diario.model.DiarioDAO;
 import br.com.diario.model.TarefaDAO;
 import globalproject.generic.Funcoes;
 import java.sql.ResultSet;
@@ -31,24 +31,28 @@ public class TarefaControl extends DataLocal {
         }
     }
 
-    public TarefaBean cadastraTarefa(TarefaBean tarefa) throws Exception {
+    public void cadastraTarefa(TarefaBean tarefa) throws Exception {
         try {
+            DiarioControl diarioControl = new DiarioControl();
+
+            DiarioBean diario = new DiarioBean();
+
+            diarioControl.getDiarioAtual(diario);
+
             tarefaDao.multiTransacao(true);
 
             int idTarefa = tarefaDao.cadastraTarefa(tarefa);
 
-            DiarioDAO diarioDao = new DiarioDAO(conexaoSingleton());
-
-            tarefaDao.cadastraControle(idTarefa, diarioDao.getIdDiarioAtual(Funcoes.getDataAtual()));
+            tarefaDao.cadastraControle(idTarefa, diario.getId());
 
             tarefaDao.commit();
 
             tarefa.setId(idTarefa);
-
-            return tarefa;
-
         } catch (Exception ex) {
-            tarefaDao.rollBack();
+            if (!conexaoSingleton().getAutoCommit()) {
+                tarefaDao.rollBack();
+            }
+
             throw new Exception(ex.getMessage());
         }
     }
@@ -56,7 +60,13 @@ public class TarefaControl extends DataLocal {
     public void finalizaTarefa(TarefaBean tarefa) throws Exception {
         try {
             tarefaDao.multiTransacao(true);
-            tarefaDao.finalizaTarefa(tarefa);
+
+            tarefa.setStatus(""+2);
+
+            tarefa.setHoraFim(Funcoes.getHoraAtual());
+
+            tarefaDao.atualizaTarefa(tarefa);
+
             tarefaDao.commit();
         } catch (Exception ex) {
             tarefaDao.rollBack();
@@ -67,10 +77,57 @@ public class TarefaControl extends DataLocal {
     public void cancelaTarefa(TarefaBean tarefa) throws Exception {
         try {
             tarefaDao.multiTransacao(true);
-            tarefaDao.cancelaTarefa(tarefa);
+
+            tarefa.setStatus(""+0);
+
+            tarefa.setHoraFim(Funcoes.getHoraAtual());
+
+            tarefaDao.atualizaTarefa(tarefa);
+
             tarefaDao.commit();
         } catch (Exception ex) {
             tarefaDao.rollBack();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public void alteraTarefa(TarefaBean tarefa) throws Exception {
+        try {
+            tarefaDao.multiTransacao(true);
+
+            tarefa.setStatus(""+1);
+
+            tarefa.setHoraFim(null);
+
+            tarefaDao.atualizaTarefa(tarefa);
+            
+            tarefaDao.commit();
+        } catch (Exception ex) {
+            tarefaDao.rollBack();
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public void excluiTarefa(final int idTarefa) throws Exception {
+        try {
+            DiarioControl diarioControl = new DiarioControl();
+
+            DiarioBean diario = new DiarioBean();
+
+            diarioControl.getDiarioAtual(diario);
+
+            tarefaDao.multiTransacao(true);
+
+            tarefaDao.deletaControle(idTarefa, diario.getId());
+
+            tarefaDao.deletaTarefa(idTarefa);
+
+            tarefaDao.commit();
+        } catch (Exception ex) {
+            if (!conexaoSingleton().getAutoCommit()) {
+                tarefaDao.rollBack();
+            }
+            
             throw new Exception(ex.getMessage());
         }
     }

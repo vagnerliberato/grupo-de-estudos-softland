@@ -32,6 +32,9 @@ public class Tarefa extends JInternalFrame {
     }
 
     public void carregaTarefa() {
+
+        tarefaBean = new TarefaBean();
+
         if (tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 0) != null) {
             tarefaBean.setId((Integer) tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 0));
         }
@@ -53,7 +56,7 @@ public class Tarefa extends JInternalFrame {
         }
 
         if (tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 5) != null) {
-            tarefaBean.setStatus((Integer) tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 5));
+            tarefaBean.setStatus(((String) tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 5)).trim());
         }
 
         if (tblTarefas.getValueAt(tblTarefas.getSelectedRow(), 6) != null) {
@@ -86,8 +89,10 @@ public class Tarefa extends JInternalFrame {
         pnBotoes = new javax.swing.JPanel();
         btnFinaliza = new javax.swing.JButton();
         btnCancela = new javax.swing.JButton();
-        btnTranca = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
+        btnEdita = new javax.swing.JButton();
+        datePesquisa = new com.toedter.calendar.JDateChooser();
+        btnPesquisa = new javax.swing.JButton();
+        btnExclui = new javax.swing.JButton();
         lbDiario = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaObs = new javax.swing.JTextArea();
@@ -97,11 +102,12 @@ public class Tarefa extends JInternalFrame {
         areaDescricao = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         lbFichaTarefa = new javax.swing.JLabel();
+        btnSair = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        setTitle("Cadastro de tarefas");
+        setTitle("Tarefas");
 
         pnTarefas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pnTarefas.setAutoscrolls(true);
@@ -130,7 +136,7 @@ public class Tarefa extends JInternalFrame {
             pnTarefasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTarefasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnTarefasLayout.setVerticalGroup(
@@ -144,6 +150,7 @@ public class Tarefa extends JInternalFrame {
         pnBotoes.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 102, 102)));
 
         btnFinaliza.setText("Finalizar");
+        btnFinaliza.setPreferredSize(new java.awt.Dimension(79, 23));
         btnFinaliza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinalizaActionPerformed(evt);
@@ -151,18 +158,31 @@ public class Tarefa extends JInternalFrame {
         });
 
         btnCancela.setText("Cancelar");
+        btnCancela.setPreferredSize(new java.awt.Dimension(79, 23));
         btnCancela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelaActionPerformed(evt);
             }
         });
 
-        btnTranca.setText("Trancar");
-
-        btnSair.setText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
+        btnEdita.setText("Editar");
+        btnEdita.setPreferredSize(new java.awt.Dimension(79, 23));
+        btnEdita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
+                btnEditaActionPerformed(evt);
+            }
+        });
+
+        datePesquisa.setDateFormatString("dd/MM/yyyy");
+
+        btnPesquisa.setText("Pesquisar");
+        btnPesquisa.setToolTipText("Listar as tarefas de uma determinada data");
+
+        btnExclui.setText("Excluir");
+        btnExclui.setPreferredSize(new java.awt.Dimension(79, 23));
+        btnExclui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluiActionPerformed(evt);
             }
         });
 
@@ -172,25 +192,35 @@ public class Tarefa extends JInternalFrame {
             pnBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnFinaliza)
+                .addComponent(btnFinaliza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExclui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnCancela)
-                .addGap(18, 18, 18)
-                .addComponent(btnTranca)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
-                .addComponent(btnSair)
-                .addContainerGap())
+                .addComponent(datePesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPesquisa)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         pnBotoesLayout.setVerticalGroup(
             pnBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBotoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFinaliza)
-                    .addComponent(btnCancela)
-                    .addComponent(btnTranca)
-                    .addComponent(btnSair))
+                    .addComponent(btnFinaliza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEdita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExclui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBotoesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(datePesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisa))
+                .addContainerGap())
         );
 
         lbDiario.setText("dados do Diario atual");
@@ -212,31 +242,46 @@ public class Tarefa extends JInternalFrame {
         lbFichaTarefa.setForeground(new java.awt.Color(102, 0, 0));
         lbFichaTarefa.setText("ficha da tarefa");
 
+        btnSair.setText("Sair");
+        btnSair.setPreferredSize(new java.awt.Dimension(79, 23));
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbFichaTarefa))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(lbDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                            .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)))
-                        .addComponent(pnBotoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnTarefas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lbDiario, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                                .addComponent(jLabel2)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(pnBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(pnTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -251,16 +296,17 @@ public class Tarefa extends JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lbFichaTarefa)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lbFichaTarefa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbDiario)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbDiario)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -269,8 +315,12 @@ public class Tarefa extends JInternalFrame {
 
     private void btnFinalizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizaActionPerformed
         try {
-            tarefaControl.finalizaTarefa(tarefaBean);
-            inicializa();
+            if (tarefaBean.getStatus().equals("PENDENTE")) {
+                tarefaControl.finalizaTarefa(tarefaBean);
+                inicializa();
+            } else {
+                Funcoes.alerta(this, "Você não pode finalizar uma tarefa que não esteja Pendente");
+            }
         } catch (Exception ex) {
             Funcoes.alerta(this, ex.getMessage());
         }
@@ -287,19 +337,59 @@ public class Tarefa extends JInternalFrame {
 
     private void btnCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelaActionPerformed
         try {
-            tarefaControl.cancelaTarefa(tarefaBean);
-            inicializa();
+            if (tarefaBean.getStatus().equals("PENDENTE")) {
+                tarefaControl.cancelaTarefa(tarefaBean);
+                inicializa();
+            } else {
+                Funcoes.alerta(this, "Você não pode cancelar uma tarefa que não esteja Pendente");
+            }
         } catch (Exception ex) {
             Funcoes.alerta(this, ex.getMessage());
         }
     }//GEN-LAST:event_btnCancelaActionPerformed
+
+    private void btnEditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditaActionPerformed
+        try {
+            if (tarefaBean.getStatus().equals("PENDENTE")) {
+                EditTarefa cad = new EditTarefa(tarefaBean);
+
+                int x = (this.getWidth() - cad.getWidth()) / 2;
+                int y = (this.getHeight() - cad.getHeight()) / 2;
+
+                cad.setLocation(x, y);
+                cad.setVisible(true);
+
+                inicializa();
+            } else {
+                Funcoes.alerta(this, "Você não pode editar uma tarefa que não esteja Pendente");
+            }
+        } catch (Exception ex) {
+            Funcoes.alerta(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnEditaActionPerformed
+
+    private void btnExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluiActionPerformed
+        try {
+            if (tarefaBean.getStatus().equals("PENDENTE")) {
+                tarefaControl.excluiTarefa(tarefaBean.getId());
+                inicializa();
+            } else {
+                Funcoes.alerta(this, "Você não pode excluir uma tarefa finalizada ou cancelada!");
+            }
+        } catch (Exception ex) {
+            Funcoes.alerta(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_btnExcluiActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDescricao;
     private javax.swing.JTextArea areaObs;
     private javax.swing.JButton btnCancela;
+    private javax.swing.JButton btnEdita;
+    private javax.swing.JButton btnExclui;
     private javax.swing.JButton btnFinaliza;
+    private javax.swing.JButton btnPesquisa;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton btnTranca;
+    private com.toedter.calendar.JDateChooser datePesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
