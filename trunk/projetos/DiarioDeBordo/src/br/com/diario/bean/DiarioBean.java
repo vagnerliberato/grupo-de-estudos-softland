@@ -17,11 +17,11 @@ public class DiarioBean {
 
     public DiarioBean() {
         this.id = 0;
-        this.observacao = null;
+        this.observacao = "";
         this.dataInicio = new Date();
         this.dataFim = null;
-        this.horaInicio = null;
-        this.horaFim = null;
+        this.horaInicio = "";
+        this.horaFim = "";
         this.listaTarefas = new ArrayList<TarefaBean>();
         this.analista = new AnalistaBean();
     }

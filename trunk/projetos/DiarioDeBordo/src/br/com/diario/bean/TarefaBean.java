@@ -5,7 +5,7 @@ public class TarefaBean {
     private int id;
     private String descricao;
     private String observacao;
-    private Integer status;
+    private String status;
     private String horaInicio;
     private String horaFim;
     private Integer ficha;
@@ -14,7 +14,7 @@ public class TarefaBean {
         this.id = 0;
         this.descricao = "";
         this.observacao = "";
-        this.status = 1;
+        this.status = ""+1;
         this.horaInicio = "";
         this.horaFim = "";
         this.ficha = 0;
@@ -68,11 +68,11 @@ public class TarefaBean {
         this.observacao = observacao;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

@@ -1,26 +1,54 @@
 package br.com.diario.main;
 
 import br.com.diario.bean.AnalistaBean;
+import br.com.diario.forms.PropJDBC;
+import br.com.diario.forms.Login;
 import br.com.diario.forms.Principal;
 import globalproject.conect.Firebird;
 import globalproject.generic.Funcoes;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends DataLocal {
 
     public static void main(String[] args) {
 
         try {
-            setConexao(new Firebird());
-            getClasseConexao().setUrl("jdbc:firebirdsql:Arthemus-PC/3050:C:/Bancos/AGENDA.FDB");
-            getClasseConexao().setUsuario("SYSDBA");
-            getClasseConexao().setSenha("buana");
+            Properties prop = new Properties();
 
-            setAnalistaBean(new AnalistaBean());
-            getAnalistaBean().setId("09");
-            getAnalistaBean().setNome("Arthemus");
-            getAnalistaBean().setSenha("carol");
+            try {
+                prop.load(new FileInputStream("firebird.properties"));
+            } catch (IOException ex) {
+
+                Funcoes.alerta(null, "Não foi possivel encontrar o " +
+                        "arquivo de configuração com as propriedades do banco de dados \n Informe as novas propiedades");
+
+                getJDBC();
+            }
+
+            try {
+                prop.load(new FileInputStream("firebird.properties"));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            setConexao(new Firebird());
+            getClasseConexao().setUrl(prop.getProperty("jdbc.url"));
+            getClasseConexao().setUsuario(prop.getProperty("jdbc.user"));
+            getClasseConexao().setSenha(prop.getProperty("jdbc.pass"));
+
+            AnalistaBean analista = new AnalistaBean();
+
+            Login login = new Login(analista);
+
+            login.setVisible(true);
+
+            setAnalistaBean(analista);
 
             Connection con = conexaoSingleton();
 
@@ -28,12 +56,17 @@ public class Main extends DataLocal {
                 Principal sistema = new Principal();
                 sistema.setVisible(true);
             } else {
-                Funcoes.alerta(null, "N�o a conex�o com o banco de dados");
+                Funcoes.alerta(null, "Não a conexão com o banco de dados");
             }
         } catch (ClassNotFoundException ex) {
             Funcoes.alerta(null, ex.getMessage());
         } catch (SQLException ex) {
             Funcoes.alerta(null, ex.getMessage());
         }
+    }
+
+    private static void getJDBC() {
+        PropJDBC jdbc = new PropJDBC();
+        jdbc.setVisible(true);
     }
 }
