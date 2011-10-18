@@ -36,7 +36,7 @@ public abstract class PersistData {
      */
     public void multiTransacao(Boolean multi) throws Exception {
         try {
-            PersistData.conexao.setAutoCommit(!multi);
+            PersistData.conexao.setAutoCommit(!multi);            
         } catch (Exception ex) {
             throw new Exception("Problemas ao abrir uma nova transação no banco de dados: \n\n Erro: " + ex.getMessage());
         }
