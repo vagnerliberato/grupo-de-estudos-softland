@@ -7,6 +7,7 @@ import br.com.diario.model.TarefaDAO;
 import globalproject.generic.Funcoes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class TarefaControl extends DataLocal {
 
@@ -25,6 +26,15 @@ public class TarefaControl extends DataLocal {
     public ResultSet carregaDados() throws Exception {
         try {
             ResultSet rs = tarefaDao.carregaTarefas();
+            return rs;
+        } catch (Exception ex) {
+            throw new Exception(ex.getMessage());
+        }
+    }
+
+    public ResultSet carregaDados(Date AData) throws Exception {
+        try {
+            ResultSet rs = tarefaDao.carregaTarefas(AData);
             return rs;
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
@@ -61,7 +71,7 @@ public class TarefaControl extends DataLocal {
         try {
             tarefaDao.multiTransacao(true);
 
-            tarefa.setStatus(""+2);
+            tarefa.setStatus("" + 2);
 
             tarefa.setHoraFim(Funcoes.getHoraAtual());
 
@@ -78,7 +88,7 @@ public class TarefaControl extends DataLocal {
         try {
             tarefaDao.multiTransacao(true);
 
-            tarefa.setStatus(""+0);
+            tarefa.setStatus("" + 0);
 
             tarefa.setHoraFim(Funcoes.getHoraAtual());
 
@@ -95,12 +105,12 @@ public class TarefaControl extends DataLocal {
         try {
             tarefaDao.multiTransacao(true);
 
-            tarefa.setStatus(""+1);
+            tarefa.setStatus("" + 1);
 
             tarefa.setHoraFim(null);
 
             tarefaDao.atualizaTarefa(tarefa);
-            
+
             tarefaDao.commit();
         } catch (Exception ex) {
             tarefaDao.rollBack();
@@ -127,7 +137,7 @@ public class TarefaControl extends DataLocal {
             if (!conexaoSingleton().getAutoCommit()) {
                 tarefaDao.rollBack();
             }
-            
+
             throw new Exception(ex.getMessage());
         }
     }

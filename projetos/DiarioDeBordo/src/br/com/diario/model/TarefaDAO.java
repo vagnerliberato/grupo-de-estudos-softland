@@ -6,6 +6,7 @@ import globalproject.generic.Funcoes;
 import globalproject.persist.PersistData;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Date;
 
 public class TarefaDAO extends PersistData {
 
@@ -29,20 +30,48 @@ public class TarefaDAO extends PersistData {
         ResultSet rs;
 
         try {
-            rs = executeQuery("select " +
-                    "tr.id_tarefa, " +
-                    "tr.descricao, " +
-                    "tr.horainicio, " +
-                    "tr.horafim, " +
-                    "tr.observacoes, " +
-                    " case tr.status when 1 then 'PENDENTE' when 2 then 'FINALIZADA' when 0 then 'CANCELADA' end as status, " +
-                    "tr.ficha " +
-                    "from tarefa tr " +
-                    "inner join controle_diario_tarefa cr on (cr.id_tarefa = tr.id_tarefa) " +
-                    "inner join diario d on (d.id_diario = cr.id_diario) " +
-                    "where d.datainicio = ? " +
-                    "and d.id_analista = ?",
+            rs = executeQuery("select "
+                    + "tr.id_tarefa, "
+                    + "tr.descricao, "
+                    + "tr.horainicio, "
+                    + "tr.horafim, "
+                    + "tr.observacoes, "
+                    + " case tr.status when 1 then 'PENDENTE' when 2 then 'FINALIZADA' when 0 then 'CANCELADA' end as status, "
+                    + "tr.ficha "
+                    + "from tarefa tr "
+                    + "inner join controle_diario_tarefa cr on (cr.id_tarefa = tr.id_tarefa) "
+                    + "inner join diario d on (d.id_diario = cr.id_diario) "
+                    + "where d.data = ? "
+                    + "and d.id_analista = ?",
                     Funcoes.getDataSQL(Funcoes.getDataAtual()),
+                    DataLocal.getAnalistaBean().getId());
+
+            return rs;
+
+        } catch (Exception ex) {
+            throw new Exception("Problemas para buscar tarefas: \n\n Erro: " + ex.getMessage());
+        }
+    }
+
+    public ResultSet carregaTarefas(Date AData) throws Exception {
+
+        ResultSet rs;
+
+        try {
+            rs = executeQuery("select "
+                    + "tr.id_tarefa, "
+                    + "tr.descricao, "
+                    + "tr.horainicio, "
+                    + "tr.horafim, "
+                    + "tr.observacoes, "
+                    + " case tr.status when 1 then 'PENDENTE' when 2 then 'FINALIZADA' when 0 then 'CANCELADA' end as status, "
+                    + "tr.ficha "
+                    + "from tarefa tr "
+                    + "inner join controle_diario_tarefa cr on (cr.id_tarefa = tr.id_tarefa) "
+                    + "inner join diario d on (d.id_diario = cr.id_diario) "
+                    + "where d.data = ? "
+                    + "and d.id_analista = ?",
+                    Funcoes.getDataSQL(AData),
                     DataLocal.getAnalistaBean().getId());
 
             return rs;

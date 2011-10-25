@@ -1,29 +1,22 @@
 package br.com.diario.bean;
 
-import java.util.ArrayList;
+import br.com.diario.main.DataLocal;
 import java.util.Date;
-import java.util.List;
 
 public class DiarioBean {
 
     private int id;
     private String observacao;
-    private Date dataInicio;
-    private Date dataFim;
-    private String horaInicio;
-    private String horaFim;
-    private List<TarefaBean> listaTarefas;
+    private Date data;
+    private String hora;
     private AnalistaBean analista;
 
     public DiarioBean() {
         this.id = 0;
         this.observacao = "";
-        this.dataInicio = new Date();
-        this.dataFim = null;
-        this.horaInicio = "";
-        this.horaFim = "";
-        this.listaTarefas = new ArrayList<TarefaBean>();
-        this.analista = new AnalistaBean();
+        this.data = new Date();
+        this.hora = "";
+        this.analista = DataLocal.getAnalistaBean();
     }
 
     public AnalistaBean getAnalista() {
@@ -34,36 +27,20 @@ public class DiarioBean {
         this.analista = analista;
     }
 
-    public Date getDataFim() {
-        return dataFim;
+    public Date getData() {
+        return data;
     }
 
-    public void setDataFim(Date dataFim) {
-        this.dataFim = dataFim;
+    public String getHora() {
+        return hora;
     }
 
-    public Date getDataInicio() {
-        return dataInicio;
+    public void setData(Date data) {
+        this.data = data;
     }
 
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public String getHoraFim() {
-        return horaFim;
-    }
-
-    public void setHoraFim(String horaFim) {
-        this.horaFim = horaFim;
-    }
-
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public int getId() {
@@ -72,14 +49,6 @@ public class DiarioBean {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public List<TarefaBean> getListaTarefas() {
-        return listaTarefas;
-    }
-
-    public void setListaTarefas(List<TarefaBean> listaTarefas) {
-        this.listaTarefas = listaTarefas;
     }
 
     public String getObservacao() {

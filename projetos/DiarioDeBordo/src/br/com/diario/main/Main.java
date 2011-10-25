@@ -25,10 +25,11 @@ public class Main extends DataLocal {
                 prop.load(new FileInputStream("firebird.properties"));
             } catch (IOException ex) {
 
-                Funcoes.alerta(null, "Não foi possivel encontrar o " +
-                        "arquivo de configuração com as propriedades do banco de dados \n Informe as novas propiedades");
+                Funcoes.alerta(null, "Não foi possivel encontrar o "
+                        + "arquivo de configuração com as propriedades do banco de dados \nInforme as novas propriedades!");
 
-                getJDBC();
+                PropJDBC jdbc = new PropJDBC();
+                jdbc.setVisible(true);
             }
 
             try {
@@ -63,10 +64,5 @@ public class Main extends DataLocal {
         } catch (SQLException ex) {
             Funcoes.alerta(null, ex.getMessage());
         }
-    }
-
-    private static void getJDBC() {
-        PropJDBC jdbc = new PropJDBC();
-        jdbc.setVisible(true);
     }
 }

@@ -3,10 +3,8 @@
 CREATE TABLE diario (
     id_diario integer not null,
     observacao varchar(2000),
-    dataInicio date not null,
-    dataFim date,
-    horaInicio varchar(8) not null,
-    horaFim varchar(8),
+    data date not null,
+    hora varchar(8) not null,
     id_analista char(2) not null
 );
 commit;
