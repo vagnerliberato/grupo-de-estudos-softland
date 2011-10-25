@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public class LoginControl extends DataLocal {
 
-    private LoginDAO tarefaDao;
+    private LoginDAO loginDao;
 
     public LoginControl() throws Exception {
         try {
-            tarefaDao = new LoginDAO(conexaoSingleton());
+            loginDao = new LoginDAO(conexaoSingleton());
         } catch (ClassNotFoundException ex) {
             throw new Exception(ex.getMessage());
         } catch (SQLException ex) {
@@ -21,7 +21,7 @@ public class LoginControl extends DataLocal {
 
     public void buscaAnalista(AnalistaBean analista) throws Exception {
         try {
-            tarefaDao.buscaAnalista(analista);
+            loginDao.buscaAnalista(analista);
         } catch (Exception ex) {
             throw new Exception(ex.getMessage());
         }
