@@ -23,7 +23,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="uJPanelImagem1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -31,63 +30,47 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="textLogin" alignment="1" pref="131" max="32767" attributes="1"/>
-                  <Component id="textSenha" alignment="1" max="32767" attributes="1"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="textSenha" max="32767" attributes="1"/>
+                  <Component id="textLogin" alignment="1" min="-2" pref="131" max="-2" attributes="1"/>
               </Group>
-              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+              <EmptySpace pref="162" max="32767" attributes="0"/>
               <Component id="btnOk" min="-2" max="-2" attributes="1"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnCancelar" min="-2" max="-2" attributes="1"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
+          <Component id="pnlImagem" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="uJPanelImagem1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textLogin" alignment="3" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <Component id="pnlImagem" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textLogin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="textSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnOk" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnOk" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="componentes.UJPanelImagem" name="uJPanelImagem1">
-      <Properties>
-        <Property name="imagem" type="java.io.File" editor="org.netbeans.beaninfo.editors.FileEditor">
-          <SerializedValue value="-84,-19,0,5,115,114,0,12,106,97,118,97,46,105,111,46,70,105,108,101,4,45,-92,69,14,13,-28,-1,3,0,1,76,0,4,112,97,116,104,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,-126,67,58,92,85,115,101,114,115,92,65,114,116,104,101,109,117,115,92,68,111,99,117,109,101,110,116,115,92,65,114,118,111,114,101,68,101,84,114,97,98,97,108,104,111,92,80,114,111,106,101,116,111,45,78,87,78,45,83,111,102,116,108,97,110,100,92,112,114,111,106,101,116,111,115,92,68,105,97,114,105,111,68,101,66,111,114,100,111,92,115,114,99,92,98,114,92,99,111,109,92,100,105,97,114,105,111,92,102,111,114,109,115,92,105,99,111,110,101,115,92,100,105,97,114,105,111,46,112,110,103,119,2,0,92,120"/>
-        </Property>
-        <Property name="opaque" type="boolean" value="true"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="450" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="311" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-    </Container>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -150,5 +133,23 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JPanel" name="pnlImagem">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xa;&#xa;    @Override&#xa;    public void paintComponent(Graphics g) {&#xa;        try {&#xa;            super.paintComponent(g);&#xa;            Graphics2D g2 = (Graphics2D) g;&#xa;            InputStream imgStream = getClass().getResourceAsStream(&quot;diario.png&quot;);&#xa;            BufferedImage image = ImageIO.read(imgStream);&#xa;            int x = (this.getWidth() - image.getWidth(null)) / 2;&#xa;            int y = (this.getHeight() - image.getHeight(null)) / 2;&#xa;            g2.drawImage(image, x, y, pnlImagem);&#xa;        } catch (Exception ex) {&#xa;        }&#xa;    }&#xa;}"/>
+      </AuxValues>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="519" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="346" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
   </SubComponents>
 </Form>

@@ -35,9 +35,9 @@ public class EditTarefa extends JDialog {
         btnAbortar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edição dee tarefa");
+        setTitle("Edição de tarefa");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel1.setText("Descrição:");
 
         areaDescricao.setColumns(20);
@@ -45,7 +45,7 @@ public class EditTarefa extends JDialog {
         areaDescricao.setRows(5);
         jScrollPane3.setViewportView(areaDescricao);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel2.setText("Obsevações:");
 
         areaObs.setColumns(20);
@@ -53,7 +53,7 @@ public class EditTarefa extends JDialog {
         areaObs.setRows(5);
         jScrollPane1.setViewportView(areaObs);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12));
         jLabel3.setText("Ficha:");
 
         textFicha.setBackground(new java.awt.Color(255, 255, 204));
@@ -169,8 +169,6 @@ public class EditTarefa extends JDialog {
             }
         }
 
-        tarefaBean.setHoraInicio(Funcoes.getHoraAtual());
-
         if (textFicha.getText().isEmpty()) {
             tarefaBean.setFicha(0);
         } else {
@@ -181,6 +179,7 @@ public class EditTarefa extends JDialog {
             TarefaControl control = new TarefaControl();
 
             if (ACAO.equals("CADASTRAR")) {
+                tarefaBean.setHoraInicio(Funcoes.getHoraAtual());
                 control.cadastraTarefa(tarefaBean);
                 Funcoes.alerta(this, "Tarefa cadastrada com suscesso!");
             } else if (ACAO.equals("ALTERAR")) {
