@@ -1,19 +1,8 @@
 package br.com.diario.forms;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.windows.WindowsLookAndFeel;
-import com.sun.java.swing.plaf.motif.MotifLookAndFeel;
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
-import com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel;
-import globalproject.generic.Funcoes;
 import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.synth.SynthLookAndFeel;
 
 public class Principal extends JFrame {
 
@@ -29,9 +18,6 @@ public class Principal extends JFrame {
 
         //colocar tela principal no centro da Tela.
         setLocationRelativeTo(null);
-
-        //configura um estilo para as janelas.
-        SetSkin(1);
     }
 
     private void NewFrame(JInternalFrame frame) {
@@ -63,49 +49,6 @@ public class Principal extends JFrame {
             frame.show();
         }
     }
-
-    private void SetSkin(int opcao) {
-        try {
-            LookAndFeel Look = null;
-
-            switch (opcao) {
-                case 1:
-                    Look = new MetalLookAndFeel();
-                    break;
-                case 2:
-                    Look = new MotifLookAndFeel();
-                    break;
-                case 3:
-                    Look = new WindowsLookAndFeel();
-                    break;
-                case 4:
-                    Look = new WindowsClassicLookAndFeel();
-                    break;
-                case 5:
-                    Look = new Plastic3DLookAndFeel();
-                    break;
-                case 6:
-                    Look = new NimbusLookAndFeel();
-                    break;
-                case 7:
-                    Look = new PlasticLookAndFeel();
-                    break;
-                case 8:
-                    Look = new PlasticXPLookAndFeel();
-                    break;
-                case 9:
-                    Look = new SynthLookAndFeel();
-                    break;
-            }
-
-            UIManager.setLookAndFeel(Look);
-            SwingUtilities.updateComponentTreeUI(this);
-
-        } catch (UnsupportedLookAndFeelException ex) {
-            Funcoes.alerta(this, ex.getMessage());
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

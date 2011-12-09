@@ -5,15 +5,10 @@ import br.com.diario.control.LoginControl;
 import globalproject.generic.Funcoes;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
 public class Login extends JDialog {
@@ -22,13 +17,10 @@ public class Login extends JDialog {
     private LoginControl loginControl;
 
     public Login(AnalistaBean analista) {
-
         analistaBean = analista;
-
-        initComponents();
-
         setModal(true);
-
+        setUndecorated(true);
+        initComponents();
         setLocationRelativeTo(null);
     }
 
@@ -61,7 +53,7 @@ public class Login extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Diário de Bordo");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Senha.:");
 
         textSenha.setBackground(new java.awt.Color(255, 255, 153));
@@ -71,7 +63,7 @@ public class Login extends JDialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Login.:");
 
         textLogin.setBackground(new java.awt.Color(255, 255, 153));

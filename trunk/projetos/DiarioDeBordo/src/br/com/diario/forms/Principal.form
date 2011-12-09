@@ -41,7 +41,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="dskPrincipal" alignment="1" pref="389" max="32767" attributes="2"/>
+                  <Component id="dskPrincipal" alignment="1" pref="392" max="32767" attributes="2"/>
                   <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
