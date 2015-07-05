@@ -1,0 +1,1 @@
+Repositório SVN para guardar os projetos do grupo de estudos da Softland.
